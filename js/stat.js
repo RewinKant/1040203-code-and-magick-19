@@ -68,9 +68,10 @@ window.renderStatistics = function (ctx, players, time) {
     } else {
       ctx.fillStyle = randomColor();
     }
-
-    ctx.fillRect(cloud.x + cloud.padding * 2 + (column.width + column.gap) * i, COLUMN_BASE_LINE - (column.height * time[i] / maxTime), column.width, column.height * time[i] / maxTime);
+    var columnX = cloud.x + cloud.padding * 2 + (column.width + column.gap) * i;
+    var columnY = COLUMN_BASE_LINE - (column.height * time[i] / maxTime);
+    ctx.fillRect(columnX, columnY, column.width, column.height * time[i] / maxTime);
     ctx.fillStyle = '#000000';
-    ctx.fillText(time[i], cloud.x + cloud.padding * 2 + (column.width + column.gap) * i, COLUMN_BASE_LINE - cloud.padding / 2 - (column.height * time[i] / maxTime));
+    ctx.fillText(time[i], columnX, columnY - cloud.padding / 2);
   }
 };
