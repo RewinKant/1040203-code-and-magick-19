@@ -7,15 +7,14 @@ var cloud = {
   color: '#ffffff',
   shadowColor: 'rgba(0, 0, 0, 0.7)',
   width: 420,
-  height: 270,
+  maxHeight: 270,
   padding: 20
 };
 
 var column = {
   width: 40,
   height: 150, // максимальое значение высоты в диаграмме
-  colorPlayer: 'rgba(255, 0, 0, 1)',
-  colorOther: 240, // deg оснвного оттенка по hsl
+  colorYou: 'rgba(255, 0, 0, 1)',
   gap: 50,
   baseLine: 10
 };
@@ -23,9 +22,9 @@ var column = {
 var FONT_TYPE = 'PT-Mono';
 var FONT_SIZE = 16; // px
 
-var COLUMN_BASE_LINE = cloud.y + cloud.height - cloud.padding - FONT_SIZE;
+var COLUMN_BASE_LINE = cloud.y + cloud.maxHeight - cloud.padding - FONT_SIZE;
 
-var PLAYER_BAZE_LINE = cloud.y + cloud.height - FONT_SIZE;
+var PLAYER_BAZE_LINE = cloud.y + cloud.maxHeight - FONT_SIZE;
 var PLAYER_WIDTH = column.width + column.gap;
 
 var renderCloud = function (options) {
@@ -36,8 +35,8 @@ var renderCloud = function (options) {
   options.ctx.fillRect(options.x, options.y, options.width, options.height);
 };
 
-var randomColor = function (h) { // по формату HSL
-  return 'hsl(' + h + ', ' + Math.ceil(Math.random() * 100) + '%, 50%)';
+var randomColor = function () { // по формату HSL
+  return 'hsl(240, ' + Math.ceil(Math.random() * 100) + '%, 50%)';
 };
 
 window.renderStatistics = function (ctx, players, time) {
@@ -48,7 +47,7 @@ window.renderStatistics = function (ctx, players, time) {
     x: cloud.x,
     y: cloud.y,
     width: cloud.width,
-    height: cloud.height
+    height: cloud.maxHeight
   });
 
   ctx.fillStyle = '#000000';
@@ -65,9 +64,9 @@ window.renderStatistics = function (ctx, players, time) {
     time[i] = parseInt(time[i], 10);
 
     if (players[i] === 'Вы') {
-      ctx.fillStyle = column.colorPlayer;
+      ctx.fillStyle = column.colorYou;
     } else {
-      ctx.fillStyle = randomColor(column.colorOther);
+      ctx.fillStyle = randomColor();
     }
 
     ctx.fillRect(cloud.x + cloud.padding * 2 + (column.width + column.gap) * i, COLUMN_BASE_LINE - (column.height * time[i] / maxTime), column.width, column.height * time[i] / maxTime);
